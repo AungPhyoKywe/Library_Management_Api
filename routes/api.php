@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\BookEntryController;
+use App\Http\Controllers\BookListController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +31,23 @@ Route::group(['prefix' => 'v1'],function () {
         Route::post('/update-profile',[AuthController::class,'update_profile']);
         Route::post('/update-profile-pic',[AuthController::class,'update_profile_pic']);
         Route::get('/user-list-for-select2',[AuthController::class,'user_list_for_select2']);
+    });
+    Route::group( ['prefix'=>'/book-list','middleware'=>['auth:api']],function(){
+        Route::get('/',[BookListController::class,'book_list']);
+        Route::post('/store',[BookListController::class,'store']);
+        Route::post('/update',[BookListController::class,'update']);
+        Route::get('/get/{id}',[BookListController::class,'get']);
+        Route::post('/delete',[BookListController::class,'delete']);
+        Route::post('/delete-multi',[BookListController::class,'delete_multi']);
+        Route::get('/book-list-for-select2',[BookListController::class,'book_list_for_select2']);
+    });
+
+    Route::group( ['prefix'=>'/book-entry','middleware'=>['auth:api']],function(){
+        Route::post('/create',[BookEntryController::class,'create']);
+        Route::get('/list',[BookEntryController::class,'list']);
+        Route::get('/user-entries',[BookEntryController::class,'user_entries']);
+        Route::post('/return-book',[BookEntryController::class,'return_book']);
+        Route::get('/getentry/{entry}',[BookEntryController::class,'getentry']);
     });
 
 });
