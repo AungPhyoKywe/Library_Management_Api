@@ -22,6 +22,13 @@ Route::group(['prefix' => 'v1'],function () {
 
     Route::group( ['prefix'=>'/user','middleware'=>['guest:api'],'namespace'=>'Api' ],function(){
         Route::post('/login',[ AuthController::class, 'login' ]);
+        Route::post('/register',[ AuthController::class, 'register' ]);
+    });
+    Route::group( ['prefix'=>'/user','middleware'=>['auth:api'],'namespace'=>'Api' ],function(){
+        Route::get('/logout',[AuthController::class,'logout']);
+        Route::post('/update-profile',[AuthController::class,'update_profile']);
+        Route::post('/update-profile-pic',[AuthController::class,'update_profile_pic']);
+        Route::get('/user-list-for-select2',[AuthController::class,'user_list_for_select2']);
     });
 
 });

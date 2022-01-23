@@ -53,6 +53,13 @@
                 return response()->json($data, 200);
             }
         }
+        public function logout()
+        {
+            Auth::user()->token()->revoke();
+            return response()->json([
+                'message' => 'logout',
+            ], 200);
+        }
     }
 
     ?>
